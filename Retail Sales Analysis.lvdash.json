@@ -1,0 +1,470 @@
+{
+  "datasets": [
+    {
+      "name": "b9844bbd",
+      "displayName": "Untitled dataset",
+      "queryLines": [
+        "\n",
+        "\n",
+        "SELECT COUNT (DISTINCT `Customer ID`) AS unique_customers, -- Count of number of unique customers\n",
+        "        Date,\n",
+        "        YEAR(Date) AS trans_year, -- Extracts year from date column\n",
+        "        \n",
+        "        MONTHNAME(Date) AS trans_month_name, -- Extracts name of the month from date column\n",
+        "        MONTH(Date) AS trans_month, -- Extracts month from date column\n",
+        "        \n",
+        "        DAY(Date) AS trans_day, -- Extracts day from date column\n",
+        "        DAYNAME(Date) AS trans_day_name, -- Extracts day of the week from data column\n",
+        "\n",
+        "        SUM(`Total Amount`) AS revenue,\n",
+        "        `Product Category`\n",
+        "\n",
+        "\n",
+        "FROM retail.sales.dataset\n",
+        "GROUP BY ALL; -- Group data based on columns not aggregated \n",
+        "--LIMIT 5;\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "5549dbe6",
+      "displayName": "Retail Sales Analysis Dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "5e4fc6df",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b9844bbd",
+                  "fields": [
+                    {
+                      "name": "Product Category",
+                      "expression": "`Product Category`"
+                    },
+                    {
+                      "name": "trans_day_name",
+                      "expression": "`trans_day_name`"
+                    },
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Revenue Achieved by Product Category, by Day",
+                "showTitle": true,
+                "showDescription": false,
+                "description": "Graph depicting revenue achieved by category, by day of the\nweek"
+              },
+              "mark": {
+                "layout": "group"
+              },
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "trans_day_name",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(revenue)",
+                  "axis": {
+                    "title": "Revenue (R)"
+                  },
+                  "displayName": "Revenue (R)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Product Category",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Beauty",
+                        "color": "#FCA4A1"
+                      },
+                      {
+                        "value": "Clothing",
+                        "color": "#AB4057"
+                      },
+                      {
+                        "value": "Electronics",
+                        "color": "#077A9D"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "fc15a97b",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b9844bbd",
+                  "fields": [
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    },
+                    {
+                      "name": "Product Category",
+                      "expression": "`Product Category`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "mark": {
+                "layout": "stack"
+              },
+              "frame": {
+                "title": "Category Revenue Contribution",
+                "showTitle": false,
+                "showDescription": false
+              },
+              "widgetType": "pie",
+              "encodings": {
+                "angle": {
+                  "fieldName": "sum(revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Category Revenue Contribution"
+                },
+                "color": {
+                  "fieldName": "Product Category",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Beauty",
+                        "color": "#FCA4A1"
+                      },
+                      {
+                        "value": "Clothing",
+                        "color": "#AB4057"
+                      },
+                      {
+                        "value": "Electronics",
+                        "color": "#077A9D"
+                      }
+                    ]
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 2,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "e0f3370d",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b9844bbd",
+                  "fields": [
+                    {
+                      "name": "Product Category",
+                      "expression": "`Product Category`"
+                    },
+                    {
+                      "name": "trans_day",
+                      "expression": "`trans_day`"
+                    },
+                    {
+                      "name": "sum(revenue)",
+                      "expression": "SUM(`revenue`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Revenue by Day",
+                "showTitle": true
+              },
+              "mark": {
+                "layout": "layer"
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "trans_day",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(revenue)",
+                  "axis": {
+                    "title": "Revenue (R)"
+                  },
+                  "displayName": "Revenue (R)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "Product Category",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Beauty",
+                        "color": "#FCA4A1"
+                      },
+                      {
+                        "value": "Clothing",
+                        "color": "#AB4057"
+                      },
+                      {
+                        "value": "Electronics",
+                        "color": "#077A9D"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 8,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "c104859c",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "b9844bbd",
+                  "fields": [
+                    {
+                      "name": "monthly(Date)",
+                      "expression": "DATE_TRUNC(\"MONTH\", `Date`)"
+                    },
+                    {
+                      "name": "count(unique_customers)",
+                      "expression": "COUNT(`unique_customers`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "title": "Total number of unique customers by Year",
+                "showTitle": true,
+                "showDescription": false
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "monthly(Date)",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(unique_customers)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 8,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "c6f344b2",
+            "multilineTextboxSpec": {
+              "lines": [
+                "# <span style=\"font-family:Verdana\">**Retail Sales Analysis**</span>\n",
+                "\n",
+                "An interactive dashboard where you can ascertain sales performance of the various category. An overall picture is given, whilst the user may go in depth, looking at the data by year and further, by month. "
+              ]
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "light": "#FFFFFF"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 7,
+            "height": 2
+          }
+        },
+        {
+          "widget": {
+            "name": "93fe2cb0",
+            "queries": [
+              {
+                "name": "dashboards/01f16032d8101f84901934c9e4af314a/datasets/fd0b6dcc1b03422c8b7954a11455c18e_trans_month",
+                "query": {
+                  "datasetName": "b9844bbd",
+                  "fields": [
+                    {
+                      "name": "trans_month",
+                      "expression": "`trans_month`"
+                    },
+                    {
+                      "name": "trans_month_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "widgetType": "filter-multi-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "trans_month",
+                    "queryName": "dashboards/01f16032d8101f84901934c9e4af314a/datasets/fd0b6dcc1b03422c8b7954a11455c18e_trans_month"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 0,
+            "width": 5,
+            "height": 1
+          }
+        },
+        {
+          "widget": {
+            "name": "689f068e",
+            "queries": [
+              {
+                "name": "dashboards/01f16032d8101f84901934c9e4af314a/datasets/fd0b6dcc1b03422c8b7954a11455c18e_trans_year",
+                "query": {
+                  "datasetName": "b9844bbd",
+                  "fields": [
+                    {
+                      "name": "trans_year",
+                      "expression": "`trans_year`"
+                    },
+                    {
+                      "name": "trans_year_associativity",
+                      "expression": "COUNT_IF(`associative_filter_predicate_group`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "frame": {
+                "showTitle": true
+              },
+              "selection": {
+                "defaultSelection": {
+                  "operator": {
+                    "operator": "AND",
+                    "args": []
+                  }
+                }
+              },
+              "widgetType": "filter-single-select",
+              "encodings": {
+                "fields": [
+                  {
+                    "fieldName": "trans_year",
+                    "queryName": "dashboards/01f16032d8101f84901934c9e4af314a/datasets/fd0b6dcc1b03422c8b7954a11455c18e_trans_year"
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 7,
+            "y": 1,
+            "width": 5,
+            "height": 1
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
